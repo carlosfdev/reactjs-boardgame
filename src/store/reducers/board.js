@@ -27,10 +27,10 @@ const hitCard = (deck, id, damage) => {
 }
 
 const whoHit = (state, action) => {
-    let playerHit = action.isFirstPlayer ? 'player2' : 'player1'
+    let targetPlayer = action.playerTurn === 1 ? 'player2' : 'player1'
     return {
         ...state,
-        [playerHit]: {...state[playerHit], cards: hitCard(state[playerHit].cards, action.id, action.damage)}
+        [targetPlayer]: {...state[targetPlayer], cards: hitCard(state[targetPlayer].cards, action.id, action.damage)}
     }
 }
 

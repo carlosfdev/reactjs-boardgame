@@ -3,12 +3,12 @@ import { combineReducers } from 'redux'
 import boardReducer from './board'
 
 const initialState = {
-    isFirstPlayer: true
+    playerTurn: 1
 }
 
 const turnReducer = (state = initialState, action) => {
     if (action.type === 'CHANGE_TURN')
-        return { ...state, isFirstPlayer: !state.isFirstPlayer }
+        return { ...state, playerTurn: state.playerTurn === 1 ? 2 : 1}
     return state
 }
 

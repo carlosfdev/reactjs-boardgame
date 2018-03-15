@@ -4,10 +4,10 @@ export const changeTurn = () => ({
     type: actionTypes.CHANGE_TURN
 })
 
-export const hitCard = (isFirstPlayer, id, damage) => {
+export const hitCard = (playerTurn, id, damage) => {
     return {
         type: actionTypes.HIT_CARD,
-        isFirstPlayer,
+        playerTurn,
         id,
         damage
     }

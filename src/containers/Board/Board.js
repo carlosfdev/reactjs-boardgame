@@ -18,8 +18,8 @@ class Board extends Component {
         }
     }
 
-    handleHit = (isFirstPlayer, id, damage) => {
-        this.props.onHitCard(isFirstPlayer, id, damage)
+    handleHit = (playerTurn, id, damage) => {
+        this.props.onHitCard(playerTurn, id, damage)
         this.props.onPassTurn()
         this.setState({
             hitterCardId: null,
@@ -36,15 +36,15 @@ class Board extends Component {
             return (
                 <div>
                     {
-                        this.props[`player${playerNumber}Cards`].map(card =>
+                        this.props.board[`player${playerNumber}`].cards.map(card =>
                             <Card
                                 key={card.id}
                                 character={card}
                                 hasAnyCardBeenSelected = {this.state.hitterCardId !== null}
                                 isSelected={card.id === this.state.hitterCardId}
-                                onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, this.state.hitterCardPower)}
+                                onHitCard={() => this.handleHit(this.props.playerTurn, card.id, this.state.hitterCardPower)}
                                 onGetPower={() => this.handleGetPower(card.id, card.power)}
-                                isHisTurn={(this.props.isFirstPlayer && playerNumber === 1) || (!this.props.isFirstPlayer && playerNumber === 2)}
+                                isHisTurn={this.props.playerTurn === playerNumber}
                             />
                         )
                     }
@@ -65,16 +65,15 @@ class Board extends Component {
 
 const mapStateToProps = state => {
     return {
-        isFirstPlayer: state.turn.isFirstPlayer,
-        player1Cards: state.board.player1.cards,
-        player2Cards: state.board.player2.cards
+        playerTurn: state.turn.playerTurn,
+        board: state.board,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onPassTurn: () => dispatch( changeTurn() ),
-        onHitCard: (isFirstPlayer, id, damage) => dispatch ( hitCard(isFirstPlayer, id, damage) )
+        onHitCard: (playerTurn, id, damage) => dispatch ( hitCard(playerTurn, id, damage) )
     }
 }
 
