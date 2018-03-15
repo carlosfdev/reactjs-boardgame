@@ -32,45 +32,32 @@ class Board extends Component {
     }
 
     render() {
-        const { player1Cards, player2Cards } = this.props
-        const player1Renderer = <div>
-            {
-                player1Cards.map(card =>
-                    <Card
-                        key={card.id}
-                        character={card}
-                        hasAnyCardBeenSelected = {this.state.hitterCardId !== null}
-                        isSelected={card.id === this.state.hitterCardId}
-                        onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, this.state.hitterCardPower)}
-                        onGetPower={() => this.handleGetPower(card.id, card.power)}
-                        isHisTurn={this.props.isFirstPlayer}
-                    />
-                )
-            }
-
-        </div>
-        const player2Renderer = <div>
-            {
-                player2Cards.map(card =>
-                    <Card
-                        key={card.id}
-                        character={card}
-                        hasAnyCardBeenSelected = {this.state.hitterCardId !== null}
-                        isSelected={card.id === this.state.hitterCardId}
-                        onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, this.state.hitterCardPower)}
-                        onGetPower={() => this.handleGetPower(card.id, card.power)}
-                        isHisTurn={!this.props.isFirstPlayer}
-                    />
-                )
-            }
-
-        </div>
+        const playerRenderer = (playerNumber) => {
+            console.log(playerNumber)
+            return (
+                <div>
+                    {
+                        this.props[`player${playerNumber}Cards`].map(card =>
+                            <Card
+                                key={card.id}
+                                character={card}
+                                hasAnyCardBeenSelected = {this.state.hitterCardId !== null}
+                                isSelected={card.id === this.state.hitterCardId}
+                                onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, this.state.hitterCardPower)}
+                                onGetPower={() => this.handleGetPower(card.id, card.power)}
+                                isHisTurn={(this.props.isFirstPlayer && playerNumber === 1) || (!this.props.isFirstPlayer && playerNumber === 2)}
+                            />
+                        )
+                    }
+                </div>
+            )
+        }
 
         return (
             <div>
                 <div className="boards">
-                    { player1Renderer }
-                    { player2Renderer }
+                    { playerRenderer(1) }
+                    { playerRenderer(2) }
                 </div>
             </div>
         )
