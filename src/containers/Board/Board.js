@@ -33,7 +33,6 @@ class Board extends Component {
 
     render() {
         const playerRenderer = (playerNumber) => {
-            console.log(playerNumber)
             return (
                 <div>
                     {
