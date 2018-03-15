@@ -1,16 +1,22 @@
 :root {
-    --primary-red: #d36e7a;
+    --primary-red: #b35a65;
+    --primary-blue: #6989b9;
 }
 
 .Card {
     background-color: white;
     border-radius: 10px;
     margin: 15px auto;
-    padding: 40px;
+    padding: 20px;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     width: 100%;
     text-align: center;
+}
+
+.Card--selected {
+    background-color: var(--primary-blue);
+    color:white;
 }
 
 .button {
@@ -31,4 +37,12 @@
 .button:hover {
     color: white;
     background-color: var(--primary-red);
+}
+
+.button--currentTurn {
+    color: var(--primary-blue);
+}
+
+.button--currentTurn:hover {
+    background-color: var(--primary-blue);
 }

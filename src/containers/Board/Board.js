@@ -13,13 +13,22 @@ class Board extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            hitterCardId: null,
+            hitterCardPower: 0
         }
     }
 
     handleHit = (isFirstPlayer, id, damage) => {
-        this.props.onPassTurn()
         this.props.onHitCard(isFirstPlayer, id, damage)
+        this.props.onPassTurn()
+        this.setState({
+            hitterCardId: null,
+            hitterCardPower: 0
+        })
+    }
+
+    handleGetPower = (hitterCardId, hitterCardPower) => {
+        this.setState({ hitterCardId: hitterCardId, hitterCardPower: hitterCardPower})
     }
 
     render() {
@@ -30,7 +39,10 @@ class Board extends Component {
                     <Card
                         key={card.id}
                         character={card}
-                        onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, 20)}
+                        hasAnyCardBeenSelected = {this.state.hitterCardId !== null}
+                        isSelected={card.id === this.state.hitterCardId}
+                        onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, this.state.hitterCardPower)}
+                        onGetPower={() => this.handleGetPower(card.id, card.power)}
                         isHisTurn={this.props.isFirstPlayer}
                     />
                 )
@@ -43,7 +55,10 @@ class Board extends Component {
                     <Card
                         key={card.id}
                         character={card}
-                        onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, 20)}
+                        hasAnyCardBeenSelected = {this.state.hitterCardId !== null}
+                        isSelected={card.id === this.state.hitterCardId}
+                        onHitCard={() => this.handleHit(this.props.isFirstPlayer, card.id, this.state.hitterCardPower)}
+                        onGetPower={() => this.handleGetPower(card.id, card.power)}
                         isHisTurn={!this.props.isFirstPlayer}
                     />
                 )
